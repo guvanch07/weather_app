@@ -4,10 +4,10 @@ import 'package:presentation/core/styles/classmorphishm.dart';
 import 'package:presentation/core/styles/style_text.dart';
 import 'package:presentation/core/utils/path/asset_path.dart';
 
-part "current_weather.dart";
-part 'search_title.dart';
-part 'hourly_wh.dart';
-part 'weekly.dart';
+part 'widgets/current_weather.dart';
+part 'widgets/search_title.dart';
+part 'widgets/hourly_wh.dart';
+part 'widgets/weekly.dart';
 
 class MainWeatherPage extends StatelessWidget {
   const MainWeatherPage({Key? key}) : super(key: key);

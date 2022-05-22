@@ -1,4 +1,4 @@
-part of "main_page.dart";
+part of '../main_page.dart';
 
 class _CurrentWeatherCard extends StatelessWidget {
   const _CurrentWeatherCard({Key? key}) : super(key: key);

@@ -1,4 +1,4 @@
-part of 'main_page.dart';
+part of '../main_page.dart';
 
 class _HourlyHorizatalList extends StatelessWidget {
   const _HourlyHorizatalList({Key? key}) : super(key: key);

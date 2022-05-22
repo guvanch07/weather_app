@@ -49,6 +49,6 @@ web/
 windows/
 macos/
 linux/
-pubspec.yaml
+pubspec.lock
 .metadata/
 **/build

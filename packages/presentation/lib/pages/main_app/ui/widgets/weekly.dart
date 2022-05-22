@@ -1,4 +1,4 @@
-part of "main_page.dart";
+part of '../main_page.dart';
 
 class _WeeklVerticalList extends StatelessWidget {
   const _WeeklVerticalList({Key? key}) : super(key: key);
