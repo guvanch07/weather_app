@@ -1,0 +1,13 @@
+{
+  "requiredField": "Обязательное поле",
+  "loginMinLength": "Минимальная длина 6 символов",
+  "invalidLogin": "Неверный логин",
+  "passwordNotMatch": "Пароль не соответствует требованиям",
+  "invalidPassword": "Неверный пароль",
+
+  "buttonLogin": "ВОЙТИ",
+  "empty": "Сорян ничего нет",
+  "labelLogin": "Логин",
+  "labelPassword": "Пароль",
+  "buttonSend": "Отправить"
+}
