@@ -16,8 +16,25 @@ Future<void> injectDataModule() async {
     () => CancelToken(),
   );
 
-  sl.registerFactory<LogInterceptor>(
-    () => LogInterceptor(requestBody: true, responseBody: true),
+  sl.registerSingleton<LogInterceptor>(
+    LogInterceptor(requestBody: true, responseBody: true),
+  );
+
+  //! services
+
+  sl.registerSingleton<Dio>(
+    dioBuilder(
+      ApiHelpers.baseUrl,
+      [
+        sl.get<LogInterceptor>(),
+      ],
+    ),
+  );
+
+  sl.registerSingleton(
+    ApiService(
+      sl.get<Dio>(),
+    ),
   );
 
   //! repositories
@@ -29,34 +46,5 @@ Future<void> injectDataModule() async {
     ),
   );
 
-  //! services
-
-  sl.registerLazySingleton<Dio>(
-    () => dioBuilder(
-      ApiHelpers.baseUrl,
-      [
-        sl.get<LogInterceptor>(),
-      ],
-    ),
-  );
-
-  sl.registerSingleton<ApiService>(
-    ApiService(
-      sl.get<Dio>(),
-    ),
-  );
-
   //! database
-
-  // sl.registerSingletonAsync<Database>(
-  //   () => LocalDBInit(
-  //           nameDB: ApiHelperCore.nameDB, version: ApiHelperCore.version)
-  //       .db,
-  // );
-
-//   sl.registerSingletonWithDependencies<ILocalDBRepository>(
-//       () => LocalDBRepository(
-//             sl.get<Database>(),
-//           ),
-//       dependsOn: [Database]);
 }

@@ -1,21 +1,27 @@
 part of '../main_page.dart';
 
 class _WeeklVerticalList extends StatelessWidget {
-  const _WeeklVerticalList({Key? key}) : super(key: key);
+  const _WeeklVerticalList({Key? key, required this.screenData})
+      : super(key: key);
+
+  final HomeData screenData;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: MediaQuery.of(context).size.height,
-        child: ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: 10,
-          itemBuilder: ((context, index) => const _WeeklItem(
-                date: 'sdds',
-                degree: '32',
-                icon: AssetPath.cloudSun,
-              )),
-        ));
+      height: MediaQuery.of(context).size.height,
+      child: ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: screenData.forecast?.daily.length,
+        itemBuilder: ((context, index) {
+          final data = screenData.forecast?.daily[index];
+          return _WeeklItem(
+              date: _mapper.dateFromTimestamp(data?.dt ?? 0),
+              degree: "${data?.high?.toInt()}/${data?.low?.toInt()}",
+              icon: _mapper.stringToIconString(data?.icon ?? ""));
+        }),
+      ),
+    );
   }
 }
 
@@ -38,7 +44,7 @@ class _WeeklItem extends StatelessWidget {
           SizedBox(
             height: 70,
             width: 70,
-            child: Image.asset(icon),
+            child: Image.asset(AssetPath.cloudNight),
           ),
           Text(degree, style: Styles.headline4)
         ],

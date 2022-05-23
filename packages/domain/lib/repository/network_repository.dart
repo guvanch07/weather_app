@@ -1,6 +1,8 @@
-import 'package:domain/models/weather_models.dart';
+import 'package:domain/models/forcast.dart';
+import 'package:domain/models/weather.dart';
 import 'package:domain/repository/base_repository.dart';
 
 abstract class INetworkRepository implements BaseRepository {
-  Future<Welcome> getNetworkData(String lon, String lat);
+  Future<Forecast> getForecastData();
+  Future<Weather> getCurrentData();
 }

@@ -9,14 +9,8 @@ abstract class BlocState<S extends StatefulWidget, B extends BaseBloc>
   final B bloc = GetIt.I.get<B>();
 
   // @protected
-  // final errorMapper = GetIt.I.get<ErrorMapper>();
-
-  // @protected
   // final colorMapper = GetIt.I.get<ColorMapper>();
 
-  // @protected
-  // final assetMapper = GetIt.I.get<AssetMapper>();
-
   @protected
-  late AppLocalizations appLocalizations;
+  AppLocalizations? appLocalizations;
 }

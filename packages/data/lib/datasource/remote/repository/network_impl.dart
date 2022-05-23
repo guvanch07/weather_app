@@ -1,7 +1,8 @@
 import 'package:data/const/api_key.dart';
 import 'package:data/services/api_service.dart';
 import 'package:dio/dio.dart';
-import 'package:domain/models/weather_models.dart';
+import 'package:domain/models/forcast.dart';
+import 'package:domain/models/weather.dart';
 import 'package:domain/repository/network_repository.dart';
 
 class NetworkRepository implements INetworkRepository {
@@ -14,12 +15,22 @@ class NetworkRepository implements INetworkRepository {
   void dispose() {}
 
   @override
-  Future<Welcome> getNetworkData(String lon, String lat) {
+  Future<Forecast> getForecastData() {
     return _service
         .get(
-          path: ApiHelpers.weatherUrl(lat, lon),
+          path: ApiHelpers.forecastWeatherUrl,
           cancelToken: _cancelToken,
         )
-        .then((value) => Welcome.fromMap(value.data));
+        .then((value) => Forecast.fromJson(value.data));
+  }
+
+  @override
+  Future<Weather> getCurrentData() {
+    return _service
+        .get(
+          path: ApiHelpers.currentWeatherUrl,
+          cancelToken: _cancelToken,
+        )
+        .then((value) => Weather.fromJson(value.data));
   }
 }

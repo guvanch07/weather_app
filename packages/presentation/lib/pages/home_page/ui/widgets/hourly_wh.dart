@@ -1,7 +1,10 @@
 part of '../main_page.dart';
 
 class _HourlyHorizatalList extends StatelessWidget {
-  const _HourlyHorizatalList({Key? key}) : super(key: key);
+  const _HourlyHorizatalList({Key? key, required this.screenData})
+      : super(key: key);
+
+  final HomeData screenData;
 
   @override
   Widget build(BuildContext context) {
@@ -9,12 +12,17 @@ class _HourlyHorizatalList extends StatelessWidget {
         height: MediaQuery.of(context).size.height * 0.2,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: 10,
-          itemBuilder: ((context, index) => const _HourlyItem(
-                time: '11:11',
-                degree: '32',
-                icon: AssetPath.cloudSun,
-              )),
+          itemCount: screenData.forecast?.hourly.length,
+          itemBuilder: ((context, index) {
+            List<Hourly> list = [];
+            final data = screenData.forecast?.hourly[index];
+            return _HourlyItem(
+              time: _mapper.timeFromTimestamp(
+                  screenData.forecast?.hourly ?? list, index),
+              degree: data?.temp ?? 0,
+              icon: _mapper.stringToIconString(data?.icon ?? ""),
+            );
+          }),
         ));
   }
 }
@@ -25,7 +33,7 @@ class _HourlyItem extends StatelessWidget {
       : super(key: key);
   final String time;
   final String icon;
-  final String degree;
+  final double degree;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +48,7 @@ class _HourlyItem extends StatelessWidget {
             width: 70,
             child: Image.asset(icon),
           ),
-          Text(degree, style: Styles.headline4)
+          Text("${degree.toInt()}°", style: Styles.headline4)
         ],
       ),
     );
