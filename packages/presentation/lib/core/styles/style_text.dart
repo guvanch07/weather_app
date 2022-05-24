@@ -3,7 +3,7 @@ import 'package:presentation/core/colors/theme_app.dart';
 
 abstract class Styles {
   static const TextStyle headline1 = TextStyle(
-      fontSize: 90,
+      fontSize: 80,
       fontWeight: FontWeight.w400,
       fontFamily: "Merriweather",
       color: AppColors.textMain);

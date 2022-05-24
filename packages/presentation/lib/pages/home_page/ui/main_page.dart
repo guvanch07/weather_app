@@ -10,6 +10,8 @@ import 'package:domain/models/hourly.dart';
 import 'package:get_it/get_it.dart';
 import 'package:presentation/pages/home_page/bloc/bloc.dart';
 import 'package:presentation/pages/home_page/bloc/bloc_data.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:presentation/core/base/bloc_state.dart';
 
 part 'widgets/current_weather.dart';
 part 'widgets/search_title.dart';
@@ -40,6 +42,7 @@ class _MainAppPageState extends BlocState<MainAppPage, HomeBloc> {
 
   @override
   Widget build(BuildContext context) {
+    appLocalizations = AppLocalizations.of(context)!;
     return StreamPlatformStackContent(
         dataStream: bloc.dataStream,
         children: (blocData) {
@@ -49,6 +52,7 @@ class _MainAppPageState extends BlocState<MainAppPage, HomeBloc> {
               return const CircularProgressIndicator.adaptive();
             } else {
               return MainWeatherPage(
+                appLocalizations: appLocalizations,
                 homeData: screenData,
               );
             }
@@ -58,9 +62,11 @@ class _MainAppPageState extends BlocState<MainAppPage, HomeBloc> {
 }
 
 class MainWeatherPage extends StatelessWidget {
-  const MainWeatherPage({Key? key, required this.homeData}) : super(key: key);
+  const MainWeatherPage(
+      {Key? key, required this.homeData, required this.appLocalizations})
+      : super(key: key);
   final HomeData homeData;
-
+  final AppLocalizations appLocalizations;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,7 +86,10 @@ class MainWeatherPage extends StatelessWidget {
           children: [
             const SizedBox(height: 15),
             const _SeatchTitle(),
-            _CurrentWeatherCard(screenData: homeData),
+            _CurrentWeatherCard(
+              screenData: homeData,
+              localizations: appLocalizations,
+            ),
             _HourlyHorizatalList(screenData: homeData),
             _WeeklVerticalList(screenData: homeData)
           ],

@@ -44,7 +44,7 @@ class _WeeklItem extends StatelessWidget {
           SizedBox(
             height: 70,
             width: 70,
-            child: Image.asset(AssetPath.cloudNight),
+            child: Image.asset(icon),
           ),
           Text(degree, style: Styles.headline4)
         ],

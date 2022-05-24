@@ -25,12 +25,14 @@ class NetworkRepository implements INetworkRepository {
   }
 
   @override
-  Future<Weather> getCurrentData() {
+  Future<CurrentWeather> getCurrentData() {
     return _service
         .get(
           path: ApiHelpers.currentWeatherUrl,
           cancelToken: _cancelToken,
         )
-        .then((value) => Weather.fromJson(value.data));
+        .then(
+          (value) => CurrentWeather.fromJson(value.data),
+        );
   }
 }

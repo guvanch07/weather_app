@@ -4,10 +4,10 @@ import 'package:domain/repository/network_repository.dart';
 
 import 'base_usecase.dart';
 
-class WeatherUseCase implements UseCase<Future<Forecast>> {
+class ForecastWeatherUseCase implements UseCase<Future<Forecast>> {
   final INetworkRepository _repository;
 
-  WeatherUseCase(this._repository);
+  ForecastWeatherUseCase(this._repository);
   @override
   Future<Forecast> call() {
     return _repository.getForecastData();

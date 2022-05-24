@@ -5,7 +5,7 @@ Dio dioBuilder(
   List<Interceptor> interceptors, {
   Map<String, dynamic>? headers,
 }) {
-  const timeout = 60000;
+  const timeout = 70000;
   final headersMap = headers ?? <String, dynamic>{};
 
   final options = BaseOptions(

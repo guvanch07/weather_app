@@ -12,5 +12,5 @@ abstract class BlocState<S extends StatefulWidget, B extends BaseBloc>
   // final colorMapper = GetIt.I.get<ColorMapper>();
 
   @protected
-  AppLocalizations? appLocalizations;
+  late AppLocalizations appLocalizations;
 }
