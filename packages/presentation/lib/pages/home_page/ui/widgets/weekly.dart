@@ -1,10 +1,12 @@
 part of '../main_page.dart';
 
 class _WeeklVerticalList extends StatelessWidget {
-  const _WeeklVerticalList({Key? key, required this.screenData})
+  const _WeeklVerticalList(
+      {Key? key, required this.screenData, required this.mapper})
       : super(key: key);
 
   final HomeData screenData;
+  final WeatherMapper mapper;
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +18,9 @@ class _WeeklVerticalList extends StatelessWidget {
         itemBuilder: ((context, index) {
           final data = screenData.forecast?.daily[index];
           return _WeeklItem(
-              date: _mapper.dateFromTimestamp(data?.dt ?? 0),
+              date: mapper.dateFromTimestamp(data?.dt ?? 0),
               degree: "${data?.high?.toInt()}/${data?.low?.toInt()}",
-              icon: _mapper.stringToIconString(data?.icon ?? ""));
+              icon: mapper.stringToIconString(data?.icon ?? ""));
         }),
       ),
     );

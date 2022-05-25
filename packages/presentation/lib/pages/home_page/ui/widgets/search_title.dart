@@ -1,7 +1,8 @@
 part of '../main_page.dart';
 
 class _SeatchTitle extends StatefulWidget {
-  const _SeatchTitle({Key? key}) : super(key: key);
+  const _SeatchTitle({Key? key, required this.screenData}) : super(key: key);
+  final HomeData screenData;
 
   @override
   State<_SeatchTitle> createState() => _SeatchTitleState();
@@ -20,7 +21,9 @@ class _SeatchTitleState extends State<_SeatchTitle> {
           child: AnimatedCrossFade(
               alignment: Alignment.center,
               firstChild: const _HeaderTitle(),
-              secondChild: const _TextField(),
+              secondChild: _TextField(
+                screenData: widget.screenData,
+              ),
               secondCurve: Curves.bounceIn,
               firstCurve: Curves.bounceIn,
               crossFadeState:
@@ -44,12 +47,17 @@ class _HeaderTitle extends StatelessWidget {
 }
 
 class _TextField extends StatelessWidget {
-  const _TextField({Key? key}) : super(key: key);
+  const _TextField({Key? key, required this.screenData}) : super(key: key);
+  final HomeData screenData;
 
   @override
   Widget build(BuildContext context) {
-    return const TextField(
-      decoration: InputDecoration(
+    return TextField(
+      onTap: (() => showSearch(
+          useRootNavigator: true,
+          context: context,
+          delegate: _CustomSearchDelegate(screenData))),
+      decoration: const InputDecoration(
         focusedErrorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
             borderSide: BorderSide(color: AppColors.errorColor)),
@@ -64,6 +72,80 @@ class _TextField extends StatelessWidget {
         hintText: "Search City....",
         hintStyle: Styles.headline3,
       ),
+    );
+  }
+}
+
+class _CustomSearchDelegate extends SearchDelegate {
+  final HomeData screenData;
+
+  _CustomSearchDelegate(this.screenData);
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: const Icon(Icons.clear),
+        onPressed: (() {
+          query = "";
+        }),
+      )
+    ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+        onPressed: () {
+          close(context, null);
+        },
+        icon: const Icon(Icons.arrow_back_ios));
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    List<String> matchQuery = [];
+    for (CityModel item in screenData.cityModel ?? []) {
+      if (item.name.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(item.name);
+      }
+    }
+    return ListView.builder(
+      itemCount: matchQuery.length,
+      itemBuilder: (BuildContext context, int index) {
+        var result = matchQuery[index];
+        return ListTile(
+          title: Text(result,
+              style: Styles.headline4.copyWith(color: Colors.black)),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    List<String> matchQuery = [];
+    for (CityModel item in screenData.cityModel ?? []) {
+      if (item.name.toLowerCase().contains(query.toLowerCase())) {
+        matchQuery.add(item.name);
+      }
+    }
+    return ListView.builder(
+      itemCount: matchQuery.length,
+      itemBuilder: (BuildContext context, int index) {
+        var result = matchQuery[index];
+        return InkWell(
+          onTap: (() => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailPage(city: result),
+                ),
+              )),
+          child: ListTile(
+            title: Text(result,
+                style: Styles.headline4.copyWith(color: Colors.black)),
+          ),
+        );
+      },
     );
   }
 }

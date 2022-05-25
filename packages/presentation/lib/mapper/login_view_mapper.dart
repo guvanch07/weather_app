@@ -14,8 +14,5 @@ class _LocationMapper implements LocationMapper {
   ) =>
       CurrentLocation(
         city: screenData.city,
-        country: screenData.country,
-        lon: screenData.lon,
-        lat: screenData.lat,
       );
 }

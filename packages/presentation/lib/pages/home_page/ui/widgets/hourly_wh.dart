@@ -1,10 +1,12 @@
 part of '../main_page.dart';
 
 class _HourlyHorizatalList extends StatelessWidget {
-  const _HourlyHorizatalList({Key? key, required this.screenData})
+  const _HourlyHorizatalList(
+      {Key? key, required this.screenData, required this.mapper})
       : super(key: key);
 
   final HomeData screenData;
+  final WeatherMapper mapper;
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +19,10 @@ class _HourlyHorizatalList extends StatelessWidget {
             List<Hourly> list = [];
             final data = screenData.forecast?.hourly[index];
             return _HourlyItem(
-              time: _mapper.timeFromTimestamp(
+              time: mapper.timeFromTimestamp(
                   screenData.forecast?.hourly ?? list, index),
               degree: data?.temp ?? 0,
-              icon: _mapper.stringToIconString(data?.icon ?? ""),
+              icon: mapper.stringToIconString(data?.icon ?? ""),
             );
           }),
         ));

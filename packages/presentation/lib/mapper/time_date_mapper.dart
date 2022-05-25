@@ -20,7 +20,7 @@ class _WeatherMapper implements WeatherMapper {
     for (var i = hour; i < hourly.length; i += 6) {
       date = DateTime.fromMillisecondsSinceEpoch(hourly[index].dt * 1000);
 
-      formatter = DateFormat('h:mm');
+      formatter = DateFormat('h:mm a');
     }
     return formatter.format(date);
   }

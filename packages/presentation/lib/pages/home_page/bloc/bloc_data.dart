@@ -1,18 +1,16 @@
 import 'package:domain/models/forcast.dart';
 import 'package:domain/models/weather.dart';
+import 'package:domain/models/city_model.dart';
 
 class HomeData {
   Forecast? forecast;
   CurrentWeather? current;
-  String lon = '';
-  String lat = '';
+  List<CityModel>? cityModel;
   String city = '';
-  String country = '';
 
-  HomeData(
-      this.forecast, this.lon, this.lat, this.city, this.country, this.current);
+  HomeData(this.forecast, this.city, this.current, this.cityModel);
 
-  factory HomeData.init() => HomeData(null, "", "", "", "", null);
+  factory HomeData.init() => HomeData(null, "", null, []);
 
-  HomeData copy() => HomeData(forecast, "", "", "", "", current);
+  HomeData copy() => HomeData(forecast, "", current, cityModel);
 }

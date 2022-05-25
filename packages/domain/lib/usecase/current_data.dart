@@ -4,13 +4,14 @@ import 'package:domain/repository/network_repository.dart';
 
 import 'base_usecase.dart';
 
-class CurrentWeatherUseCase implements UseCase<Future<CurrentWeather>> {
+class CurrentWeatherUseCase
+    implements UseCaseParams<String, Future<CurrentWeather>> {
   final INetworkRepository _repository;
 
   CurrentWeatherUseCase(this._repository);
   @override
-  Future<CurrentWeather> call() {
-    return _repository.getCurrentData();
+  Future<CurrentWeather> call(String city) async {
+    return _repository.getCurrentData(city);
   }
 
   @override

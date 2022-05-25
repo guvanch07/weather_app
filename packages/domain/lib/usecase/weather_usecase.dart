@@ -9,7 +9,7 @@ class ForecastWeatherUseCase implements UseCase<Future<Forecast>> {
 
   ForecastWeatherUseCase(this._repository);
   @override
-  Future<Forecast> call() {
+  Future<Forecast> call() async {
     return _repository.getForecastData();
   }
 

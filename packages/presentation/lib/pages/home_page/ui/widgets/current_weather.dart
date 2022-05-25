@@ -2,10 +2,14 @@ part of '../main_page.dart';
 
 class _CurrentWeatherCard extends StatelessWidget {
   const _CurrentWeatherCard(
-      {Key? key, required this.screenData, required this.localizations})
+      {Key? key,
+      required this.screenData,
+      required this.localizations,
+      required this.mapper})
       : super(key: key);
   final HomeData screenData;
   final AppLocalizations localizations;
+  final WeatherMapper mapper;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +38,7 @@ class _CurrentWeatherCard extends StatelessWidget {
                   SizedBox(
                       height: 100,
                       width: 100,
-                      child: Image.asset(_mapper
+                      child: Image.asset(mapper
                           .stringToIconString(screenData.current?.icon ?? ""))),
                   const Text("Pressure", style: Styles.headline3),
                   Text("${screenData.current?.pressure.toInt() ?? 0} hPa",

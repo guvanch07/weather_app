@@ -4,21 +4,21 @@ import 'package:presentation/core/base/stream_platform_stack_content.dart';
 import 'package:presentation/core/colors/theme_app.dart';
 import 'package:presentation/core/styles/classmorphishm.dart';
 import 'package:presentation/core/styles/style_text.dart';
-import 'package:presentation/core/utils/path/asset_path.dart';
 import 'package:presentation/mapper/time_date_mapper.dart';
 import 'package:domain/models/hourly.dart';
-import 'package:get_it/get_it.dart';
+import 'package:presentation/pages/detail_page/ui/main_detail_page.dart';
 import 'package:presentation/pages/home_page/bloc/bloc.dart';
 import 'package:presentation/pages/home_page/bloc/bloc_data.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:presentation/core/base/bloc_state.dart';
+import 'package:domain/models/city_model.dart';
 
 part 'widgets/current_weather.dart';
 part 'widgets/search_title.dart';
 part 'widgets/hourly_wh.dart';
 part 'widgets/weekly.dart';
 
-final _mapper = GetIt.I<WeatherMapper>();
+//! it is just mock, usully it can be from current location of device
+const String city = "Minsk";
 
 class MainAppPage extends StatefulWidget {
   const MainAppPage({Key? key}) : super(key: key);
@@ -30,7 +30,7 @@ class MainAppPage extends StatefulWidget {
 class _MainAppPageState extends BlocState<MainAppPage, HomeBloc> {
   @override
   void initState() {
-    bloc.getData();
+    bloc.getData(city);
     super.initState();
   }
 
@@ -47,11 +47,13 @@ class _MainAppPageState extends BlocState<MainAppPage, HomeBloc> {
         dataStream: bloc.dataStream,
         children: (blocData) {
           final screenData = blocData.data;
+
           if (screenData is HomeData) {
             if (screenData.forecast == null) {
               return const CircularProgressIndicator.adaptive();
             } else {
               return MainWeatherPage(
+                mapper: weatherMapper,
                 appLocalizations: appLocalizations,
                 homeData: screenData,
               );
@@ -63,10 +65,14 @@ class _MainAppPageState extends BlocState<MainAppPage, HomeBloc> {
 
 class MainWeatherPage extends StatelessWidget {
   const MainWeatherPage(
-      {Key? key, required this.homeData, required this.appLocalizations})
+      {Key? key,
+      required this.homeData,
+      required this.appLocalizations,
+      required this.mapper})
       : super(key: key);
   final HomeData homeData;
   final AppLocalizations appLocalizations;
+  final WeatherMapper mapper;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,13 +91,22 @@ class MainWeatherPage extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: [
             const SizedBox(height: 15),
-            const _SeatchTitle(),
+            _SeatchTitle(
+              screenData: homeData,
+            ),
             _CurrentWeatherCard(
               screenData: homeData,
               localizations: appLocalizations,
+              mapper: mapper,
             ),
-            _HourlyHorizatalList(screenData: homeData),
-            _WeeklVerticalList(screenData: homeData)
+            _HourlyHorizatalList(
+              screenData: homeData,
+              mapper: mapper,
+            ),
+            _WeeklVerticalList(
+              screenData: homeData,
+              mapper: mapper,
+            )
           ],
         ),
       ),
