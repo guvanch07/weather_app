@@ -1,13 +1,27 @@
-class CurrentWeather {
+import 'package:hive/hive.dart';
+part 'weather.g.dart';
+
+@HiveType(typeId: 0)
+class CurrentWeather extends HiveObject {
+  @HiveField(0)
   final double temp;
+  @HiveField(1)
   final double feelsLike;
+  @HiveField(2)
   final double low;
+  @HiveField(3)
   final double high;
+  @HiveField(4)
   final String description;
+  @HiveField(5)
   final String main;
+  @HiveField(6)
   final double pressure;
+  @HiveField(7)
   final double humidity;
+  @HiveField(8)
   final double wind;
+  @HiveField(9)
   final String icon;
 
   CurrentWeather({
