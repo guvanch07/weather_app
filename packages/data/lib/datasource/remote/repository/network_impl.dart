@@ -1,4 +1,6 @@
 import 'package:data/const/api_key.dart';
+import 'package:data/const/error.dart';
+import 'package:data/datasource/local/init/init_hive.dart';
 import 'package:data/services/api_service.dart';
 import 'package:dio/dio.dart';
 import 'package:domain/models/city_model.dart';
@@ -29,22 +31,46 @@ class NetworkRepository implements INetworkRepository {
   Future<CurrentWeather> getCurrentData(String city) async {
     return _service
         .get(
-          path: ApiHelpers.currentWeatherUrl(city),
-          cancelToken: _cancelToken,
-        )
-        .then(
-          (value) => CurrentWeather.fromJson(value.data),
-        );
+      path: ApiHelpers.currentWeatherUrl(city),
+      cancelToken: _cancelToken,
+    )
+        .then((value) {
+      final getLocally = HiveHelpers.testBox.get(HiveKeys.testKey);
+      if (getLocally != null) return getLocally;
+      final remoteData = CurrentWeather.fromJson(value.data);
+      HiveHelpers.testBox.put(HiveKeys.testKey, remoteData);
+
+      return remoteData;
+    }).onError((error, stackTrace) {
+      if (error is DioError && error.response?.statusCode == 401) {
+        return Future.error(ErrorHandler("ups"));
+      } else {
+        return Future.error("upsss");
+      }
+    });
   }
 
   @override
   Future<List<CityModel>> getCities() async {
     List<CityModel> list = [];
-    return _service.get(path: ApiHelpers.cityUrl).then((value) {
-      list.add(CityModel.fromMap(value.data));
+    //return _service.get(path: ApiHelpers.cityUrl).then((value) {
+    list.add(CityModel.fromMap(
+      {
+        "id": 79,
+        "name": "Kabul",
+        "state_id": 3902,
+        "state_code": "KAB",
+        "state_name": "Kabul",
+        "country_id": 1,
+        "country_code": "AF",
+        "country_name": "Afghanistan",
+        "latitude": "34.52813000",
+        "longitude": "69.17233000",
+        "wikiDataId": "Q5838"
+      },
+    ));
 
-      return list;
-    });
+    return list;
   }
 }
 

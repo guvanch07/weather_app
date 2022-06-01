@@ -4,7 +4,6 @@ import 'package:data/dio/dio_buildaer.dart';
 import 'package:data/services/api_service.dart';
 import 'package:dio/dio.dart';
 import 'package:domain/repository/network_repository.dart';
-
 import 'package:get_it/get_it.dart';
 
 Future<void> injectDataModule() async {
