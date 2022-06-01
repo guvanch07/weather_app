@@ -1,4 +1,4 @@
-import 'package:domain/models/weather.dart';
+import 'package:domain/models/weather/weather.dart';
 
 class DetailData {
   CurrentWeather? current;

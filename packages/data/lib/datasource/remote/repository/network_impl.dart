@@ -1,11 +1,11 @@
 import 'package:data/const/api_key.dart';
-import 'package:data/const/error.dart';
 import 'package:data/datasource/local/init/init_hive.dart';
 import 'package:data/services/api_service.dart';
 import 'package:dio/dio.dart';
 import 'package:domain/models/city_model.dart';
 import 'package:domain/models/forcast.dart';
-import 'package:domain/models/weather.dart';
+import 'package:domain/models/weather/weather.dart';
+
 import 'package:domain/repository/network_repository.dart';
 
 class NetworkRepository implements INetworkRepository {
@@ -39,14 +39,7 @@ class NetworkRepository implements INetworkRepository {
       if (getLocally != null) return getLocally;
       final remoteData = CurrentWeather.fromJson(value.data);
       HiveHelpers.testBox.put(HiveKeys.testKey, remoteData);
-
       return remoteData;
-    }).onError((error, stackTrace) {
-      if (error is DioError && error.response?.statusCode == 401) {
-        return Future.error(ErrorHandler("ups"));
-      } else {
-        return Future.error("upsss");
-      }
     });
   }
 
