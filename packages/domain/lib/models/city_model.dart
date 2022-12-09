@@ -1,3 +1,5 @@
+import 'package:equatable/equatable.dart';
+
 class City extends Equatable {
   const City({
     required this.name,
@@ -47,10 +49,10 @@ class City extends Equatable {
     );
   }
 
-  String toJson() => json.encode(toMap());
+  // String toJson() => json.encode(toMap());
 
-  factory City.fromJson(String source) =>
-      City.fromMap(json.decode(source) as Map<String, dynamic>);
+  // factory City.fromJson(String source) =>
+  //     City.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   List<Object?> get props => [name, state, lat, lon];

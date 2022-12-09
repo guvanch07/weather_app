@@ -1,20 +1,19 @@
+import 'package:domain/models/hourly.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:presentation/core/base/bloc_state.dart';
 import 'package:presentation/core/base/stream_platform_stack_content.dart';
 import 'package:presentation/core/colors/theme_app.dart';
 import 'package:presentation/core/styles/classmorphishm.dart';
 import 'package:presentation/core/styles/style_text.dart';
 import 'package:presentation/mapper/time_date_mapper.dart';
-import 'package:domain/models/hourly.dart';
-import 'package:presentation/pages/detail_page/ui/main_detail_page.dart';
 import 'package:presentation/pages/home_page/bloc/bloc.dart';
 import 'package:presentation/pages/home_page/bloc/bloc_data.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:domain/models/city_model.dart';
+import 'package:presentation/pages/home_page/ui/widgets/search_text_field.dart';
 
 part 'widgets/current_weather.dart';
-part 'widgets/search_title.dart';
 part 'widgets/hourly_wh.dart';
+part 'widgets/search_title.dart';
 part 'widgets/weekly.dart';
 
 //! it is just mock, usully it can be from current location of device
@@ -91,9 +90,7 @@ class MainWeatherPage extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: [
             const SizedBox(height: 15),
-            _SeatchTitle(
-              screenData: homeData,
-            ),
+            const _SeatchTitle(),
             _CurrentWeatherCard(
               screenData: homeData,
               localizations: appLocalizations,

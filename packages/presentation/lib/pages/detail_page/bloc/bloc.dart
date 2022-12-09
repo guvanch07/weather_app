@@ -1,8 +1,9 @@
+import 'dart:developer';
+
 import 'package:domain/usecase/current_data.dart';
 import 'package:presentation/core/base/bloc_base.dart';
 import 'package:presentation/core/base/bloc_base_impl.dart';
 import 'package:presentation/pages/detail_page/bloc/bloc_data.dart';
-import 'package:presentation/pages/home_page/bloc/bloc_data.dart';
 //import 'package:presentation/core/utils/string_exctention.dart';
 
 abstract class DetailBloc extends BaseBloc {
@@ -32,6 +33,7 @@ class _DetailBloc extends BaseBlocImpl implements DetailBloc {
     _screenData.current = await _currentWeatherUseCase(city);
 
     _updateData();
+    log('${_screenData.current}<<<<<<<<');
   }
 
   void _updateData() {

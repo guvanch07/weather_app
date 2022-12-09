@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:presentation/core/base/bloc_state.dart';
 import 'package:presentation/core/base/stream_platform_stack_content.dart';
 import 'package:presentation/core/styles/classmorphishm.dart';
@@ -7,7 +8,6 @@ import 'package:presentation/mapper/time_date_mapper.dart';
 import 'package:presentation/pages/detail_page/bloc/bloc.dart';
 import 'package:presentation/pages/detail_page/bloc/bloc_data.dart';
 import 'package:presentation/pages/home_page/ui/main_page.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({Key? key, required this.city}) : super(key: key);

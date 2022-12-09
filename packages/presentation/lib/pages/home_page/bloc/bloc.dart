@@ -1,11 +1,12 @@
-import 'package:domain/usecase/weather_usecase.dart';
-import 'package:domain/usecase/current_data.dart';
+//import 'package:presentation/core/utils/string_exctention.dart';
+import 'package:domain/models/city_model.dart';
 import 'package:domain/usecase/cities_usecase.dart';
+import 'package:domain/usecase/current_data.dart';
+import 'package:domain/usecase/weather_usecase.dart';
 import 'package:presentation/core/base/bloc_base.dart';
 import 'package:presentation/core/base/bloc_base_impl.dart';
 import 'package:presentation/mapper/login_view_mapper.dart';
 import 'package:presentation/pages/home_page/bloc/bloc_data.dart';
-//import 'package:presentation/core/utils/string_exctention.dart';
 
 abstract class HomeBloc extends BaseBloc {
   factory HomeBloc(
@@ -16,17 +17,17 @@ abstract class HomeBloc extends BaseBloc {
       _HomeBloc(useCase, currentWeatherUseCase, cityUseCase);
 
   void getData(String city);
+  Future<List<City>> searchQuery(String query);
 }
 
 class _HomeBloc extends BaseBlocImpl implements HomeBloc {
   final ForecastWeatherUseCase _forecastUseCase;
   final CurrentWeatherUseCase _currentWeatherUseCase;
-  final CitiesUseCase _cityModel;
+  final CitiesUseCase cityModel;
 
   final _screenData = HomeData.init();
 
-  _HomeBloc(
-      this._forecastUseCase, this._currentWeatherUseCase, this._cityModel);
+  _HomeBloc(this._forecastUseCase, this._currentWeatherUseCase, this.cityModel);
 
   @override
   void initState() {
@@ -37,7 +38,7 @@ class _HomeBloc extends BaseBlocImpl implements HomeBloc {
   @override
   void getData(String city) async {
     //final requestData = _locationMapper.mapScreenDataToRequest(_screenData);
-    _screenData.cityModel = await _cityModel();
+
     _screenData.current = await _currentWeatherUseCase(city);
     _screenData.forecast = await _forecastUseCase();
     _updateData();
@@ -55,6 +56,11 @@ class _HomeBloc extends BaseBlocImpl implements HomeBloc {
     super.dispose();
     _forecastUseCase.dispose();
     _currentWeatherUseCase.dispose();
-    _cityModel.dispose();
+    cityModel.dispose();
+  }
+
+  @override
+  Future<List<City>> searchQuery(String query) async {
+    return await cityModel(query);
   }
 }

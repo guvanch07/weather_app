@@ -6,5 +6,5 @@ import 'package:domain/repository/base_repository.dart';
 abstract class INetworkRepository implements BaseRepository {
   Future<Forecast> getForecastData();
   Future<CurrentWeather> getCurrentData(String city);
-  Future<List<CityModel>> getCities();
+  Future<List<City>> getCities(String city);
 }

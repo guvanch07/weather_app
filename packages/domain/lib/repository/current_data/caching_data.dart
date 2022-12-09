@@ -3,5 +3,5 @@ import 'package:domain/models/weather/weather.dart';
 
 class CurrentWeatherDataCache {
   CurrentWeather? current;
-  List<CityModel>? cityModel;
+  List<City>? cityModel;
 }
