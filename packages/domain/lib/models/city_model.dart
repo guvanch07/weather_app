@@ -1,55 +1,69 @@
-class CityModel {
-  CityModel({
-    required this.id,
+class City extends Equatable {
+  const City({
     required this.name,
-    required this.stateId,
-    required this.stateCode,
-    required this.stateName,
-    required this.countryId,
-    required this.countryCode,
-    required this.countryName,
-    required this.latitude,
-    required this.longitude,
-    required this.wikiDataId,
+    this.state,
+    required this.lat,
+    required this.lon,
   });
 
-  final int id;
   final String name;
-  final int stateId;
-  final String stateCode;
-  final String stateName;
-  final int countryId;
-  final String countryCode;
-  final String countryName;
-  final String latitude;
-  final String longitude;
-  final String wikiDataId;
+  final String? state;
+  final double lat;
+  final double lon;
 
-  factory CityModel.fromMap(Map<String, dynamic> json) => CityModel(
-        id: json["id"],
-        name: json["name"],
-        stateId: json["state_id"],
-        stateCode: json["state_code"],
-        stateName: json["state_name"],
-        countryId: json["country_id"],
-        countryCode: json["country_code"],
-        countryName: json["country_name"],
-        latitude: json["latitude"],
-        longitude: json["longitude"],
-        wikiDataId: json["wikiDataId"],
-      );
+  City copyWith({
+    String? name,
+    String? state,
+    double? lat,
+    double? lon,
+  }) {
+    return City(
+      name: name ?? this.name,
+      state: state ?? this.state,
+      lat: lat ?? this.lat,
+      lon: lon ?? this.lon,
+    );
+  }
 
-  Map<String, dynamic> toMap() => {
-        "id": id,
-        "name": name,
-        "state_id": stateId,
-        "state_code": stateCode,
-        "state_name": stateName,
-        "country_id": countryId,
-        "country_code": countryCode,
-        "country_name": countryName,
-        "latitude": latitude,
-        "longitude": longitude,
-        "wikiDataId": wikiDataId,
-      };
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      CityResponse.name: name,
+      CityResponse.state: state,
+      CityResponse.lat: lat,
+      CityResponse.lon: lon,
+    };
+  }
+
+  factory City.fromMap(Map<String, dynamic> map, {bool fromRequest = false}) {
+    return City(
+      name: fromRequest
+          ? map[CityResponse.localNames][CityResponse.locale] as String
+          : map[CityResponse.name],
+      state: map[CityResponse.state] != null
+          ? map[CityResponse.state] as String
+          : null,
+      lat: map[CityResponse.lat] as double,
+      lon: map[CityResponse.lon] as double,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory City.fromJson(String source) =>
+      City.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  List<Object?> get props => [name, state, lat, lon];
+
+  @override
+  bool get stringify => true;
+}
+
+abstract class CityResponse {
+  static const String localNames = 'local_names';
+  static const String locale = 'ru';
+  static const String name = 'name';
+  static const String state = 'state';
+  static const String lat = 'lat';
+  static const String lon = 'lon';
 }

@@ -40,14 +40,14 @@ class _HourlyItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GlassMorphism(
-      margin: 5,
+      margin: 2,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text(time, style: Styles.headline4),
           SizedBox(
-            height: 70,
-            width: 70,
+            height: MediaQuery.of(context).size.height * 0.07,
+            width: MediaQuery.of(context).size.width * 0.2,
             child: Image.asset(icon),
           ),
           Text("${degree.toInt()}°", style: Styles.headline4)
