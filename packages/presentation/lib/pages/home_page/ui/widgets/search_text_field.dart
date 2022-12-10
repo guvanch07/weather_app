@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:domain/models/city_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -76,6 +78,8 @@ class _CitySearchFieldState extends State<CitySearchField> {
       },
       onSuggestionSelected: (suggestion) {
         controller.text = suggestion.name;
+
+        log(suggestion.name);
         Navigator.push(
           context,
           MaterialPageRoute(

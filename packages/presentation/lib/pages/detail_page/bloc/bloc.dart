@@ -30,8 +30,8 @@ class _DetailBloc extends BaseBlocImpl implements DetailBloc {
 
   @override
   void getData(String city) async {
-    _screenData.current = await _currentWeatherUseCase(city);
-
+    final data = await _currentWeatherUseCase(city);
+    _screenData.current = data;
     _updateData();
     log('${_screenData.current}<<<<<<<<');
   }

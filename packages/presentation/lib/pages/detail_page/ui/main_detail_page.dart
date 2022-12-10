@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:presentation/core/base/bloc_state.dart';
@@ -7,7 +9,6 @@ import 'package:presentation/core/styles/style_text.dart';
 import 'package:presentation/mapper/time_date_mapper.dart';
 import 'package:presentation/pages/detail_page/bloc/bloc.dart';
 import 'package:presentation/pages/detail_page/bloc/bloc_data.dart';
-import 'package:presentation/pages/home_page/ui/main_page.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({Key? key, required this.city}) : super(key: key);
@@ -20,7 +21,10 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends BlocState<DetailPage, DetailBloc> {
   @override
   void initState() {
-    bloc.getData(city);
+    bloc.initState();
+    bloc.getData(widget.city);
+
+    log(widget.city);
     super.initState();
   }
 
@@ -41,14 +45,13 @@ class _DetailPageState extends BlocState<DetailPage, DetailBloc> {
           if (screenData is DetailData) {
             if (screenData.current == null) {
               return const CircularProgressIndicator.adaptive();
-            } else {
-              return _DetailsPageItem(
-                screenData: screenData,
-                appLocalizations: appLocalizations,
-                mapper: weatherMapper,
-                cityName: widget.city,
-              );
             }
+            return _DetailsPageItem(
+              screenData: screenData,
+              appLocalizations: appLocalizations,
+              mapper: weatherMapper,
+              cityName: widget.city,
+            );
           }
         });
   }

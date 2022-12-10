@@ -17,7 +17,6 @@ part 'widgets/search_title.dart';
 part 'widgets/weekly.dart';
 
 //! it is just mock, usully it can be from current location of device
-const String city = "Minsk";
 
 class MainAppPage extends StatefulWidget {
   const MainAppPage({Key? key}) : super(key: key);
@@ -29,7 +28,9 @@ class MainAppPage extends StatefulWidget {
 class _MainAppPageState extends BlocState<MainAppPage, HomeBloc> {
   @override
   void initState() {
-    bloc.getData(city);
+    //bloc.initState();
+    bloc.getData(
+        'Minsk'); //! it is just mock, usully it can be from current location of device
     super.initState();
   }
 
