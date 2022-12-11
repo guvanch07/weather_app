@@ -16,8 +16,6 @@ part 'widgets/hourly_wh.dart';
 part 'widgets/search_title.dart';
 part 'widgets/weekly.dart';
 
-//! it is just mock, usully it can be from current location of device
-
 class MainAppPage extends StatefulWidget {
   const MainAppPage({Key? key}) : super(key: key);
 
@@ -87,25 +85,52 @@ class MainWeatherPage extends StatelessWidget {
             end: Alignment.topCenter,
           ),
         ),
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const SizedBox(height: 15),
-            const _SeatchTitle(),
-            _CurrentWeatherCard(
-              screenData: homeData,
-              localizations: appLocalizations,
-              mapper: mapper,
-            ),
-            _HourlyHorizatalList(
-              screenData: homeData,
-              mapper: mapper,
-            ),
-            _WeeklVerticalList(
-              screenData: homeData,
-              mapper: mapper,
-            )
-          ],
+        child: OrientationBuilder(
+          builder: (context, orientation) => orientation == Orientation.portrait
+              ? ListView(
+                  padding: EdgeInsets.zero,
+                  children: [
+                    const SizedBox(height: 15),
+                    const _SeatchTitle(),
+                    _CurrentWeatherCard(
+                      screenData: homeData,
+                      localizations: appLocalizations,
+                      mapper: mapper,
+                    ),
+                    _HourlyHorizatalList(
+                      screenData: homeData,
+                      mapper: mapper,
+                    ),
+                    _WeeklVerticalList(
+                      screenData: homeData,
+                      mapper: mapper,
+                    )
+                  ],
+                )
+              : Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    const _SeatchTitle(),
+                    Row(
+                      children: [
+                        _CurrentWeatherCard(
+                          screenData: homeData,
+                          localizations: appLocalizations,
+                          mapper: mapper,
+                        ),
+                        _WeeklVerticalList(
+                          physics: const BouncingScrollPhysics(),
+                          screenData: homeData,
+                          mapper: mapper,
+                        )
+                      ],
+                    ),
+                    // _HourlyHorizatalList(
+                    //   screenData: homeData,
+                    //   mapper: mapper,
+                    // ),
+                  ],
+                ),
         ),
       ),
     );
