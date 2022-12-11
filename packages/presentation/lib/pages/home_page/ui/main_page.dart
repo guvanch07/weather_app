@@ -1,4 +1,3 @@
-import 'package:domain/models/hourly.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:presentation/core/base/bloc_state.dart';
@@ -75,9 +74,7 @@ class MainWeatherPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.all(10),
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [AppColors.accentGreen, AppColors.accentOrange],
@@ -85,52 +82,75 @@ class MainWeatherPage extends StatelessWidget {
             end: Alignment.topCenter,
           ),
         ),
-        child: OrientationBuilder(
-          builder: (context, orientation) => orientation == Orientation.portrait
-              ? ListView(
-                  padding: EdgeInsets.zero,
-                  children: [
-                    const SizedBox(height: 15),
-                    const _SeatchTitle(),
-                    _CurrentWeatherCard(
-                      screenData: homeData,
-                      localizations: appLocalizations,
-                      mapper: mapper,
-                    ),
-                    _HourlyHorizatalList(
-                      screenData: homeData,
-                      mapper: mapper,
-                    ),
-                    _WeeklVerticalList(
-                      screenData: homeData,
-                      mapper: mapper,
-                    )
-                  ],
-                )
-              : Column(
-                  children: [
-                    const SizedBox(height: 10),
-                    const _SeatchTitle(),
-                    Row(
-                      children: [
-                        _CurrentWeatherCard(
-                          screenData: homeData,
-                          localizations: appLocalizations,
-                          mapper: mapper,
-                        ),
-                        _WeeklVerticalList(
-                          physics: const BouncingScrollPhysics(),
-                          screenData: homeData,
-                          mapper: mapper,
-                        )
-                      ],
-                    ),
-                    // _HourlyHorizatalList(
-                    //   screenData: homeData,
-                    //   mapper: mapper,
-                    // ),
-                  ],
-                ),
+        child: SafeArea(
+          child: OrientationBuilder(
+            builder: (context, orientation) => orientation ==
+                    Orientation.portrait
+                ? ListView(
+                    padding: EdgeInsets.zero,
+                    children: [
+                      const SizedBox(height: 15),
+                      const _SeatchTitle(),
+                      _CurrentWeatherCard(
+                        screenData: homeData,
+                        localizations: appLocalizations,
+                        mapper: mapper,
+                      ),
+                      _HourlyHorizatalList(
+                        widthtRatio: MediaQuery.of(context).size.width,
+                        heightRatio: MediaQuery.of(context).size.height * 0.18,
+                        screenData: homeData,
+                        mapper: mapper,
+                      ),
+                      _WeeklVerticalList(
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        screenData: homeData,
+                        mapper: mapper,
+                      )
+                    ],
+                  )
+                : Column(
+                    children: [
+                      const _SeatchTitle(),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            children: [
+                              _CurrentWeatherCard(
+                                margin: 10,
+                                style: Styles.headline2.copyWith(fontSize: 40),
+                                size: 60,
+                                subTitleStyle: Styles.headline3,
+                                screenData: homeData,
+                                localizations: appLocalizations,
+                                mapper: mapper,
+                              ),
+                              _HourlyHorizatalList(
+                                widthtRatio:
+                                    MediaQuery.of(context).size.width * 0.45,
+                                heightRatio:
+                                    MediaQuery.of(context).size.height * 0.37,
+                                scrollDirection: Axis.horizontal,
+                                screenData: homeData,
+                                mapper: mapper,
+                              ),
+                            ],
+                          ),
+                          _WeeklVerticalList(
+                            height: MediaQuery.of(context).size.height - 70,
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            physics: const BouncingScrollPhysics(),
+                            screenData: homeData,
+                            mapper: mapper,
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+          ),
         ),
       ),
     );

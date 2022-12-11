@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of '../main_page.dart';
 
 class _WeeklVerticalList extends StatelessWidget {
@@ -6,17 +7,21 @@ class _WeeklVerticalList extends StatelessWidget {
     required this.screenData,
     required this.mapper,
     this.physics = const NeverScrollableScrollPhysics(),
+    required this.width,
+    required this.height,
   }) : super(key: key);
 
   final HomeData screenData;
   final WeatherMapper mapper;
   final ScrollPhysics physics;
+  final double width;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 300,
-      height: MediaQuery.of(context).size.height,
+      width: width,
+      height: height,
       child: ListView.builder(
         physics: physics,
         itemCount: screenData.forecast?.daily.length,
